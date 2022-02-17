@@ -15,10 +15,7 @@ for i in lista2:
         lista1.append(u)
 print(lista2)
 print(lista1)
-
-
 operacion=str(input("Dime la operación\n::: "))
-
 caracteres=operacion.split()
 print(len(caracteres))
 print(caracteres
@@ -44,9 +41,13 @@ def separador(string):
             break
 
 def separadorv2(string):
-    def separadorv2(string):
     lista1=[]
     for u in range(len(string)):
+        if len(string)==0:
+            break
+        if string[-1]=="·":
+            string=string[:-1]
+            print(string)
         if string[0]=="(":
             for i in range(len(string)):
                 if string[i]=="(":
@@ -54,32 +55,35 @@ def separadorv2(string):
                         if string[j]==")":
                             lista1.append(string[i+1:j])
                             string=string[j+1:]
-                            if string[0]=="(":
+                            if len(string)==0:
+                                break
+                            elif string[0]=="(":
                                 break
                             else:
                                 break
                 if string[0]!="(":
                     break
         else:
-            cadena=string+"·"
-            lista_separada=[]
+            string=string+"·"
             x=0
-            for i in range(len(cadena)):
+            for i in range(len(string)):
+                if string[0]=="(":
+                    break
                 print("num x ->{}".format(x))
-                print("string ->{}".format(cadena[x]))
+                print("string ->{}".format(string[x]))
+                if string[0] in "+-*/":
+                    lista1.append(str(string[x]))
+                    string=string[x+1:]
+                    print(string)
                 if string[x] in "+-*/":
-                    lista1.append(str(cadena[:x]))
-                    lista1.append(str(cadena[x]))
-                    cadena=cadena[x+1:]
-                    print(cadena)
+                    lista1.append(str(string[:x]))
+                    lista1.append(str(string[x]))
+                    string=string[x+1:]
+                    print(string)
                     x=0
                 x+=1
-                if cadena[x]=="·":
-                    lista1.append(str(cadena[:x]))
-                    break
-                
+                if string[x]=="·":
+                    lista1.append(str(string[:x]))
+                    break      
     print(lista1)
-separadorv2("(2+2*3)/3+(3+2*2)")
-
-
 separadorv2("(2+2*3)/3+(3+2*2)")
