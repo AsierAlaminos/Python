@@ -20,8 +20,6 @@ caracteres=operacion.split()
 print(len(caracteres))
 print(caracteres
 )
-
-
 def separador(lista,string):
     global stringv1
     stringv1=string+"·"
@@ -41,7 +39,6 @@ def separador(lista,string):
         if stringv1[x]=="·":
             lista.append(str(stringv1[:x]))
             break
-
 def separadorv2(string):
     global lista1
     lista1=[]
@@ -73,7 +70,6 @@ def separadorv2(string):
             separador(lista1,string)
             string=stringv1
     print(f"lista1 -> {lista1}")
-
 def organizador(lista):
     global lista_organizada
     lista_organizada=[]
@@ -84,15 +80,11 @@ def organizador(lista):
         if lista[i]=="+" or lista[i]=="-":
             lista_organizada.append(i)
     print(f"lista_organizada -> {lista_organizada}")
-
 separadorv2("(2+2*3)/3+(3+2*2)")
 organizador(lista1)
 2+2*3/3+3+2*2
-
-
 #PETICIÓN DE LA OPERACIÓN
 operacion=str(input("Dime la operación\n::: "))
-
 #SEPARADOR
 def separador(string):
     global lista_separada
@@ -109,18 +101,15 @@ def separador(string):
         if string[x]=="·":
             lista_separada.append(str(string[:x]))
             break
-
 #FILTRO
 def filtro(string, lista):
     global numeritos, num_operacion
     #DECLARACIÓN DE LA LISTA
     numeritos=lista.copy()
-
     #ALGORITMO
     for i in lista:
         if i in "+-*/":
             numeritos.remove(i)
-
 #ORGANIZADOR
 def organizador(lista):
     global lista_organizada
@@ -131,12 +120,9 @@ def organizador(lista):
     for i in range(len(lista)):
         if lista[i]=="+" or lista[i]=="-":
             lista_organizada.append(i)
-
 separador(operacion)
 filtro(operacion, lista_separada)
 organizador(lista_separada)
-
-
 #OPERACIONES
 if len(lista_separada)<=2:
     print("La operación está mal escrita\nEj: 2+5-5*9")
@@ -182,3 +168,95 @@ string="(2+2*3)/3+(3+2**2)+9"
 print(string)
 print(string[1:3])
 print(string[3:])
+
+
+#ULTIMOS CAMBIOS PYTHON TUTOR
+from math import sqrt
+
+def operaciones(lista,caracter):
+    if (lista[caracter])=="+":
+        res=float(lista[caracter-1])+float(lista[caracter+1])
+        lista.insert(caracter,res)
+        lista.pop(caracter-1)
+        lista.pop(caracter+1)
+        lista.pop(caracter)
+    elif lista[caracter]=="-":
+        res=float(lista[caracter-1])-float(lista[caracter+1])
+        lista.insert(caracter,res)
+        lista.pop(caracter-1)
+        lista.pop(caracter+1)
+        lista.pop(caracter)
+    elif lista[caracter]=="*":
+        res=float(lista[caracter-1])*float(lista[caracter+1])
+        lista.insert(caracter,res)
+        lista.pop(caracter-1)
+        lista.pop(caracter+1)
+        lista.pop(caracter)
+    elif lista[caracter]=="/":
+        if lista[0]!="0" or lista[1]!="0":
+            res=float(lista[caracter-1])/float(lista[caracter+1])
+            lista.insert(caracter,res)
+            lista.pop(caracter-1)
+            lista.pop(caracter+1)
+            lista.pop(caracter)
+        else:
+            print("En la división no puede haber un 0")
+    elif lista[caracter]=="**":
+        res=float(lista[caracter-1])**float(lista[caracter+1])
+        lista.insert(caracter,res)
+        lista.pop(caracter-1)
+        lista.pop(caracter+1)
+        lista.pop(caracter)
+    elif lista[caracter]=="$":
+        res=sqrt(float(lista[caracter+1]))
+        lista.insert(caracter,res)
+        lista.pop(caracter+1)
+        lista.pop(caracter+1)
+    else:
+        print("El operador debe estar entre estos: + - * /")
+    organizador(lista)
+    
+def organizador(lista):
+    global lista_organizada
+    lista_organizada=[]
+    for i in range(len(lista)):
+        if lista[i]=="$":
+            lista_organizada.append(i)
+    for i in range(len(lista)):
+        if lista[i]=="**":
+            lista_organizada.append(i)
+    for i in range(len(lista)):
+        if lista[i]=="*" or lista[i]=="/":
+            lista_organizada.append(i)
+    for i in range(len(lista)):
+        if lista[i]=="+" or lista[i]=="-":
+            lista_organizada.append(i)
+
+lista1=['2', '+', '2', '+', '$','9']
+
+if lista1[0]=="help":
+    print("suma=+'\nresta='-'\nmultiplicación='*'\ndivisión='/'\nexponentes='**'\nraiz cuadrada='$'")
+elif len(lista1)<=1:
+    print("La operación está mal escrita\nEj: 2+5-5*9")
+else:
+    organizador(lista1)
+    print(f"lista_organizada -> {lista_organizada}")
+    for i in range(len(lista1)):
+        if len(lista1[i])>=3:
+            organizador(lista1[i])
+            print(f"lista_organizada{lista_organizada}")
+            for u in lista_organizada:
+                operaciones(lista1[i],u)
+            lista1[i]=str(lista1[i][0])
+    for j in lista_organizada:
+        if len(lista1)<=1:
+            break
+        else:
+            if len(lista_organizada)<j:
+                organizador(lista1)
+                for i in lista_organizada:
+                    operaciones(lista1,i)
+                break
+            else:
+                operaciones(lista1,j)
+    print(f"El resultado es -> {lista1[0]}")
