@@ -50,10 +50,6 @@ def separador(string):
                             if len(lista_pasajera)>=3:
                                 lista1.append(lista_pasajera)
                                 lista_pasajera=[]
-                            if len(string)==0:
-                                break
-                            elif string[0]=="(":
-                                break
                             else:
                                 break
                 if len(string)<=0:
